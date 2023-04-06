@@ -9,8 +9,12 @@ import "./assets/css/index.css";
 import "./assets/css/iconfont.css";
 import "./assets/css/markdown.css";
 import "./assets/css/vue-social-share/client.css";
+import "highlight.js/styles/atom-one-dark.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
+import Message from './components/message';
 
 
 const pinia = createPinia();
@@ -31,10 +35,25 @@ axios.interceptors.request.use(function (config) {
 //     return Promise.reject(error)
 //   })
 
+axios.interceptors.response.use(
+    function (response) {
+        switch (response.data.code) {
+            case 50000:
+                Message({ type: "error", message: "系统异常" });
+        }
+        return response;
+    },
+    function (error) {
+        return Promise.reject(error);
+    }
+);
+
+
 
 createApp(App)
     .use(router)
     .use(vuetify)
     .use(pinia)
     .use(VueAxios, axios)
+    .component('InfiniteLoading', InfiniteLoading)
     .mount('#app')

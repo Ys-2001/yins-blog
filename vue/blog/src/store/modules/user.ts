@@ -10,8 +10,8 @@ export default defineStore("user", {
                 nickname: "",
                 intro: "",
                 webSite: "",
-                articleLikeSet: [],
-                commentLikeSet: [],
+                articleLikeSet: [] as number[],
+                commentLikeSet: [] as number[],
                 email: "",
                 loginType: null,
             },
@@ -23,7 +23,6 @@ export default defineStore("user", {
             searchModelFlag: false,
             drawer: false,
             loginUrl: "",
-            blogInfo: {},
             token: "",
         }
     },
@@ -78,14 +77,14 @@ export default defineStore("user", {
             }
         },
         articleLike(articleId: number) {
-            const commentLikeSet: number[] = this.userInfo.commentLikeSet;
-            if (commentLikeSet.indexOf(articleId) != -1) {
-                commentLikeSet.splice(
-                    commentLikeSet.indexOf(articleId),
+            const articleLikeSet: number[] = this.userInfo.articleLikeSet;
+            if (articleLikeSet.indexOf(articleId) != -1) {
+                articleLikeSet.splice(
+                    articleLikeSet.indexOf(articleId),
                     1
                 );
             } else {
-                commentLikeSet.push(articleId);
+                articleLikeSet.push(articleId);
             }
         },
     },

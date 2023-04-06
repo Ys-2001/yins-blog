@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app  :class="navClass" hide-on-scroll flat height="60">
+    <v-app-bar app :class="navClass"  flat height="60">
         <!-- 手机端导航栏 -->
         <div class="d-md-none nav-mobile-container">
             <div style="font-size: 18px; font-weight: bold">
@@ -7,32 +7,80 @@
                     Y
                 </router-link>
             </div>
+
+            <div class="menus-item">
+                <a class="menu-btn" @click="openSearch">
+                    <i class="iconfont iconsousuo" /> 搜索
+                </a>
+            </div>
+
+
         </div>
         <!-- 电脑导航栏 -->
         <div class="d-md-block d-none nav-container">
-            <div class="float-left blog-title">
+            <div class="float-left blog-title blog-title2">
                 <router-link to="/">
                     Y
                 </router-link>
             </div>
-            <div class="float-right nav-title">
+            <div class="float-left blog-title">
                 <div class="menus-item">
                     <router-link class="menu-btn" to="/">
                         <i class="iconfont iconzhuye" /> 首页
                     </router-link>
                 </div>
-
+                <div class="menus-item">
+                    <a class="menu-btn" @click="openSearch">
+                        <i class="iconfont iconsousuo" /> 搜索
+                    </a>
+                </div>
+                <div class="menus-item">
+                    <a class="menu-btn">
+                        <i class="iconfont iconfaxian" /> 发现
+                        <i class="iconfont iconxiangxia2 expand" />
+                    </a>
+                    <ul class="menus-submenu">
+                        <li>
+                            <router-link to="/archives">
+                                <i class="iconfont iconguidang" /> 归档
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/categories">
+                                <i class="iconfont iconfenlei" /> 分类
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/tags">
+                                <i class="iconfont iconbiaoqian" /> 标签
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
 
                 <div class="menus-item">
-                    <router-link class="menu-btn" to="/link">
-                        <i class="iconfont iconzhuye" /> link
+                    <router-link class="menu-btn" to="/links">
+                        <i class="iconfont iconlianjie" /> 友链
                     </router-link>
                 </div>
+                <div class="menus-item">
+                    <router-link class="menu-btn" to="/about">
+                        <i class="iconfont iconzhifeiji" /> 关于
+                    </router-link>
+                </div>
+                <div class="menus-item">
+                    <router-link class="menu-btn" to="/message">
+                        <i class="iconfont iconpinglunzu" /> 留言
+                    </router-link>
+                </div>
+
+            </div>
+            <div class="float-right nav-title">
                 <div class="menus-item">
                     <a class="menu-btn" v-if="!isLogin" @click="openLogin">
                         <i class="iconfont icondenglu" /> 登录
                     </a>
-                    <template v-else >
+                    <template v-else>
                         <img class="user-avatar" :src="userInfo.avatar" height="30" width="30" />
                         <ul class="menus-submenu">
                             <li>
@@ -52,13 +100,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted,  toRefs } from "vue";
+import { ref, onMounted, toRefs } from "vue";
 import useStore from '../../store/'
 import axios from "axios";
 import Message from "../message";
 
 const { user } = useStore();
-const { loginModelFlag, userInfo, isLogin } = toRefs(user)
+const { loginModelFlag, userInfo, isLogin, searchModelFlag } = toRefs(user)
 const scrollTop = ref(0);
 const navClass = ref("nav");
 
@@ -74,13 +122,13 @@ const scroll = () => {
 const logout = () => {
     axios.get("/api/logout").then(({ data }) => {
         if (data.flag) {
-          user.logout();
-          Message({ type: "success", message: "注销成功" });
+            user.logout();
+            Message({ type: "success", message: "注销成功" });
         } else {
-          Message({ type: "error", message: data.message });
+            Message({ type: "error", message: data.message });
         }
-      });
-    }
+    });
+}
 
 
 onMounted(() => {
@@ -89,6 +137,10 @@ onMounted(() => {
 
 const openLogin = () => {
     loginModelFlag.value = true;
+};
+
+const openSearch = () => {
+    searchModelFlag.value = true;
 };
 
 </script>
@@ -163,6 +215,10 @@ ul {
 .blog-title a {
     font-size: 18px;
     font-weight: bold;
+}
+
+.blog-title2 {
+    margin-right: 5%;
 }
 
 .menus-item {

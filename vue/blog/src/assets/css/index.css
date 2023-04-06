@@ -29,6 +29,12 @@ ul{
   justify-content: start;
 }
 
+.v-img__img--contain{
+  object-fit: cover !important;
+}
+
+
+
 .v-theme--light.v-card {
   background: #fff;
   color: #4c4948;
@@ -64,6 +70,10 @@ ul{
   color: #4c4948;
 }
 
+.v-footer{
+  padding: 0px;
+}
+
 .v-theme--light.v-navigation-drawer {
   background: #f6f8fa;
 }
@@ -89,6 +99,10 @@ ul{
 
 .v-theme--dark.v-footer {
   color: rgba(255,255,255,0.8);
+}
+
+.footer_temp{
+  position: relative;
 }
 
 .v-theme--dark.v-application{

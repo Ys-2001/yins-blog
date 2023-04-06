@@ -75,13 +75,14 @@ const style = {
     height: 50px;
     position: fixed;
     z-index: 9999;
-    left: 41%;
     top: 25px;
     line-height: 50px;
     padding: 0 25px;
     background: #f5f5f5;
     color: #999;
     border-radius: 6px;
+    left: 50%;
+    transform: translate(-50%);
 
 
     i {
@@ -93,4 +94,5 @@ const style = {
         vertical-align: middle;
         font-size: .875rem;
     }
-}</style>
+}
+</style>

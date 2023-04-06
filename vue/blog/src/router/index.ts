@@ -9,11 +9,15 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
-    component: () => import("../views/HomeView.vue"),
+    component: () => import("../views/home/HomeView.vue"),
   },
   {
-    path: "/Error/500",
-    component: () => import("../views/Error/500View.vue"),
+    path: "/articles/:id",
+    component: () => import("../views/article/ArticleView.vue"),
+  },
+  {
+    path: "/links",
+    component: () => import("../views/article/TestView.vue"),
   },
 ]
 
@@ -23,11 +27,12 @@ const router = createRouter({
 });
 
 //跳转前
-router.beforeEach((to: any, from: any) => {
+router.beforeEach((to: any, from: any,next: any) => {
   if (to.fullPath == '/setting') {
     router.push("/")
   }
   NProgress.start();
+  next();
 });
 //跳转后
 router.afterEach(() => {
